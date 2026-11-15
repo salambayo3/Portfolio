@@ -1,130 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdulsalam | Frontend Developer (React / Next.js)</title>
+<meta name="description" content="Portfolio of Abdulsalam, a frontend developer building React and Next.js apps in Ibadan, Nigeria.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b1020;
+    --surface: #131a2e;
+    --surface-2: #1a2340;
+    --ink: #eef1fa;
+    --muted: #a3adc8;
+    --accent: #8aa4ff;
+    --sand: #f2d7a0;
+    --line: #26304f;
+    --head: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+    --body: "Outfit", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body { font-family: var(--body); background: var(--bg); color: var(--ink); line-height: 1.65; font-size: 17px; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  :focus-visible { outline: 3px solid var(--sand); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: min(1080px, 100% - 40px); margin-inline: auto; }
+
+  header { position: sticky; top: 0; z-index: 10; background: rgba(11,16,32,.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: var(--head); font-weight: 700; font-size: 1.2rem; text-decoration: none; }
+  nav ul { display: flex; gap: 4px; list-style: none; }
+  nav a { display: block; padding: 8px 14px; border-radius: 999px; text-decoration: none; color: var(--muted); font-size: .95rem; transition: background .2s, color .2s; }
+  nav a:hover, nav a.active { background: var(--surface-2); color: var(--ink); }
+
+  .hero { padding: 80px 0 96px; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+  .hello { color: var(--sand); font-weight: 500; font-size: 1.1rem; margin-bottom: 14px; }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-top: 28px; }
+  .facts li { padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: .9rem; }
+  .hero h1 { font-family: var(--head); font-size: clamp(2.3rem, 6vw, 4.1rem); line-height: 1.05; letter-spacing: -.03em; margin-bottom: 16px; max-width: 15ch; }
+  .hero h2 { font-family: var(--head); font-weight: 500; font-size: clamp(1.2rem, 2.6vw, 1.6rem); color: var(--accent); margin-bottom: 20px; }
+  .hero p { color: var(--muted); max-width: 50ch; margin-bottom: 30px; }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 13px 26px; border-radius: 999px; font-weight: 600; text-decoration: none; transition: transform .15s, background .2s; }
+  .btn-primary { background: var(--accent); color: #0b1020; }
+  .btn-primary:hover { background: #a9bcff; }
+  .btn-ghost { border: 1.5px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--accent); }
+  .photo { position: relative; max-width: 400px; margin-inline: auto; width: calc(100% - 16px); margin-right: auto; }
+  .photo::before { content: ""; position: absolute; inset: 16px -16px -16px 16px; border: 2px solid var(--sand); border-radius: 200px 200px 28px 28px; }
+  .photo img { position: relative; width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: 55% 8%; border-radius: 200px 200px 28px 28px; background: var(--surface); }
+
+  .menu-btn { display: none; width: 44px; height: 44px; border: 1.5px solid var(--line); border-radius: 12px; background: transparent; cursor: pointer; flex-direction: column; justify-content: center; align-items: center; gap: 5px; }
+  .menu-btn span { width: 20px; height: 2px; background: var(--ink); border-radius: 2px; transition: transform .2s, opacity .2s; }
+  .menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  section { padding: 88px 0; }
+  .section-title { font-family: var(--head); font-size: clamp(2rem, 4vw, 2.7rem); letter-spacing: -.02em; margin-bottom: 36px; }
+  .alt { background: var(--surface); border-block: 1px solid var(--line); }
+
+  .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: start; }
+  .about-grid img { width: 100%; position: sticky; top: 90px; aspect-ratio: 1/1; object-fit: cover; object-position: 55% 18%; border-radius: 28px; }
+  .about-grid p { color: var(--muted); max-width: 58ch; margin-bottom: 18px; }
+  .timeline { margin-top: 30px; display: grid; gap: 22px; }
+  .tl h3 { font-family: var(--head); font-size: 1.15rem; }
+  .tl .when { color: var(--sand); font-size: .92rem; margin-bottom: 6px; }
+  .tl ul { color: var(--muted); padding-left: 20px; font-size: .97rem; }
+  .tl li { margin-bottom: 4px; }
+  .tl p { margin-bottom: 0; font-size: .97rem; }
+
+  .skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .skill-group { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 28px; }
+  .skill-group h3 { font-family: var(--head); font-size: 1.15rem; margin-bottom: 16px; color: var(--accent); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
+  .chips li { padding: 6px 14px; border-radius: 999px; background: var(--surface-2); font-size: .93rem; }
+
+  .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .project { background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; }
+  .project h3 { font-family: var(--head); font-size: 1.25rem; margin-bottom: 10px; }
+  .project p { color: var(--muted); font-size: .97rem; margin-bottom: 16px; flex: 1; }
+  .project .chips { margin-bottom: 20px; }
+  .project .chips li { font-size: .85rem; padding: 4px 12px; }
+  .project a.link { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1.5px solid currentColor; align-self: flex-start; }
+  .project .note { color: var(--sand); font-size: .9rem; }
+
+  #contact { text-align: center; }
+  #contact p { color: var(--muted); max-width: 46ch; margin: 0 auto 30px; }
+  .contact-list { list-style: none; display: grid; gap: 12px; max-width: 420px; margin: 0 auto 30px; }
+  .contact-list a { display: block; padding: 14px 20px; border: 1.5px solid var(--line); border-radius: 14px; text-decoration: none; transition: border-color .2s, background .2s; }
+  .contact-list a:hover { border-color: var(--accent); background: var(--surface); }
+  .contact-list span { display: block; font-size: .85rem; color: var(--muted); }
+
+  footer { padding: 26px 0; text-align: center; font-size: .9rem; color: var(--muted); border-top: 1px solid var(--line); }
+
+  @media (max-width: 860px) {
+    .hero-grid, .about-grid { grid-template-columns: 1fr; gap: 44px; }
+    .skills, .projects { grid-template-columns: 1fr; }
+    .about-grid img { max-width: 320px; margin-inline: auto; }
+    .menu-btn { display: flex; }
+    nav { position: absolute; top: 64px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--line); display: none; }
+    nav.open { display: block; }
+    nav ul { flex-direction: column; padding: 12px 20px 18px; gap: 2px; }
+    nav a { padding: 12px 14px; font-size: 1rem; }
+    .hero { padding-top: 40px; }
+    .about-grid img { position: static; }
+    section { padding: 64px 0; }
+    .photo { max-width: 340px; margin-inline: auto; }
+    .hero h1 { max-width: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
 </head>
-
 <body>
-    <a href="#home" class="scroll-top"><i class="fas fa-arrow-up"></i></a>
-    <header>
-        <div class="nav container">
-            <a href="" class="lodo">Tunde Salam</a>
-            <ul class="navbar">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#service" class="nav-link">Service</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="menu-icon">
-                <i class="fas fa-bars" id="menu"></i>
-            </div>
-        </div>
-    </header>
 
-    <section class="home container" id="home">
-        <div class="home-content">
-            <div class="home-img">
-                <img src="./dolapo.jpg.jpg" alt="">
-            </div>
-            <div class="home-text">
-                <h3>Hello I am Tunde Salam</h3>
-                <h2> Full-stack <span> Web Developer</span></h2>
-                <p>I design and develop services for customers of all sizes, specializing in creating stylish,
-                    modern
-                    websites, web services and online stores.</p>
-                <div class="social">
-                    <a href="https://www.facebook.com/profile.php?id=10007332831104"><i class="fab fa-facebook"
-                            id="social"></i></a>
-                    <a href="https://github.com/salambayo3"><i class="fab fa-github" id="social"></i></a>
-                    <a href="https://twitter.com/Abiodunsalam51?t=au91BFNnAgH5-Zam0cVauA&s=09"><i class="fab fa-twitter"
-                            id="social"></i></a>
-                    <a href="https://www.linkedin.com/in/tunde-salam-0211a5245"><i class="fab fa-linkedin"
-                            id="social"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#home">Abdulsalam</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <nav id="menu" aria-label="Main">
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-    <section class="about container" id="about">
-        <h2 class="heading">About me</h2>
-        <div class="about-content">
-            <div class="about-data">
-                <!-- <span>About Me</span> -->
-                <img src="./dolapo.jpg.jpg" alt="">
-            </div>
-            <div class="about-text">
-                <p>I'm a Freelancer Front-end Developer with over 3 years experience. I'm from Nigeria.I code and create
-                    web
-                    elements for people around the globe.I also make the website more attractive & interactive with web
-                    animations.A responsive design makes your website accessible to all users, regardless of their
-                    device.
-                </p>
-                <a href="#contact" class="btn">Contact</a>
-            </div>
+<main>
+  <section id="home" class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="hello">Hello, I'm Abdulsalam</p>
+        <h1>I build web apps people enjoy using.</h1>
+        <h2>Frontend Developer (React / Next.js)</h2>
+        <p>Fast, responsive interfaces built with React and Next.js, from live API data to clean, reusable components. Computer Science graduate in Ibadan, open to entry-level frontend roles.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#projects">View my projects</a>
+          <a class="btn btn-ghost" href="#contact">Contact me</a>
         </div>
-    </section>
+        <ul class="facts" aria-label="Quick facts">
+          <li>Ibadan, Nigeria</li>
+          <li>Open to work</li>
+          <li>B.Sc. Computer Science</li>
+        </ul>
+      </div>
+      <div class="photo">
+        <img src="photo.jpg" alt="Portrait of Abdulsalam in a black shirt, standing outdoors on a green lawn" width="720" height="960">
+      </div>
+    </div>
+  </section>
 
-    <section class="service container" id="service">
-        <h2 class="heading">Service</h2>
-        <div class="service-content">
-            <div class="service-box">
-                <i class="fas fa-laptop"></i>
-                <h2>Web Development</h2>
-                <p>Diligent,committed to quality and highly skilled, i provide an exceptional service built on
-                    trust
-                    and
-                    a determination to deliver client satisfaction.I have developed range of website using HTML CSS and
-                    JAVASCRIPT including sites for startup companies and small business.</p>
+  <section id="about" class="alt">
+    <div class="wrap">
+      <h2 class="section-title">About me</h2>
+      <div class="about-grid">
+        <img src="photo.jpg" alt="Abdulsalam with his hand on his collar" width="720" height="960" loading="lazy">
+        <div>
+          <p>I'm an entry-level frontend developer who builds with React and Next.js. I completed a B.Sc. in Computer Science at Koladaisi University and did a frontend internship where I built a working React app against a live API.</p>
+          <p>I care about clean interfaces that load quickly and work on every screen size.</p>
+          <div class="timeline">
+            <div class="tl">
+              <h3>Frontend Developer Intern, New Horizon</h3>
+              <div class="when">August 2023 to November 2023 · New choice Plaza, Challenge, Ibadan</div>
+              <ul>
+                <li>Built a responsive weather app in React that shows current conditions and forecasts for any city a user searches.</li>
+                <li>Integrated a weather REST API to fetch live data, and handled loading and error states, such as a city not found.</li>
+                <li>Created reusable components and managed data with React hooks (useState, useEffect).</li>
+                <li>Used Git and GitHub to save and share code throughout the project.</li>
+              </ul>
             </div>
-            <div class="service-box">
-                <i class="fas fa-mobile"></i>
-                <h2>Mobile App Development</h2>
-                <p>By following industy-leading guidelines,I developed mobile apps and successfully identify
-                    business
-                    drawbacks and provide a solution for all of them with the use of technologies such as HTML
-                    JAVASCRIPT CSS and PHP</p>
+            <div class="tl">
+              <h3>B.Sc. Computer Science, Koladaisi University</h3>
+              <div class="when">2022 to 2026</div>
             </div>
-            <div class="service-box">
-                <i class="fas fa-palette"></i>
-                <h2>UI/UX Design</h2>
-                <p> I am a highly dedicated FullStack Developer with stong UI/UX abilities,ready to leverage and
-                    improve
-                    your business. website should be built with primary goals to work across all devices and to
-                    be
-                    fast.
-                </p>
-            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section class="contact container" id="contact">
-        <h2 class="heading">Contact</h2>
-        <form action="https://formspree.io/f/xoqrorqk" method="post" class="contact-form" id="contact-form">
-            <input type="text" placeholder="Your Name" name="name" required>
-            <input type="email" placeholder="Your Email" name="email" required>
-            <textarea name="msg" id="" cols="30" rows="10" placeholder="Project Description"></textarea>
-            <input type="submit" value="Send" class="send-btn">
-        </form>
-    </section>
-
-    <section class="footer-container">
-        <div class="social">
-            <a href="https://www.facebook.com/profile.php?id=10007332831104"><i class="fab fa-facebook"
-                    id="social"></i></a>
-            <a href="https://github.com/salambayo3"><i class="fab fa-github" id="social"></i></a>
-            <a href="https://twitter.com/Abiodunsalam51?t=au91BFNnAgH5-Zam0cVauA&s=09"><i class="fab fa-twitter"
-                    id="social"></i></a>
-            <a href="https://www.linkedin.com/in/tunde-salam-0211a5245"><i class="fab fa-linkedin" id="social"></i></a>
+  <section id="skills">
+    <div class="wrap">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills">
+        <div class="skill-group">
+          <h3>Frameworks</h3>
+          <ul class="chips"><li>React</li><li>Next.js</li></ul>
         </div>
-        <p>Copyright &copy:2022 Portfolio_Theme, All right Reserved. </p>
-    </section>
-    <script src="./main.js"></script>
+        <div class="skill-group">
+          <h3>Languages</h3>
+          <ul class="chips"><li>JavaScript</li><li>HTML</li><li>CSS</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Tools</h3>
+          <ul class="chips"><li>Git</li><li>GitHub</li><li>REST APIs</li><li>Netlify</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="alt">
+    <div class="wrap">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects">
+        <article class="project">
+          <h3>Investment Recommendation System</h3>
+          <p>A Next.js web app that supports retail traders with investment recommendations, powered by the Random Forest algorithm.</p>
+          <ul class="chips"><li>Next.js</li><li>Random Forest</li><li>Netlify</li></ul>
+          <a class="link" href="https://sparkly-bombolone-5c2076.netlify.app/" target="_blank" rel="noopener">View live project</a>
+        </article>
+        <article class="project">
+          <h3>Travel Landing Page</h3>
+          <p>A responsive landing page for a travel brand, hosted on GitHub Pages.</p>
+          <ul class="chips"><li>HTML</li><li>CSS</li><li>GitHub Pages</li></ul>
+          <a class="link" href="https://salambayo3.github.io/travel" target="_blank" rel="noopener">View live project</a>
+        </article>
+        <article class="project">
+          <h3>Weather App</h3>
+          <p>A responsive React app built during my New Horizon internship. It shows current conditions and forecasts for any searched city, with loading and error states.</p>
+          <ul class="chips"><li>React</li><li>REST API</li><li>Hooks</li></ul>
+          <a class="link" href="https://salambayo3.github.io/Weather-app/" target="_blank" rel="noopener">View live project</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <h2 class="section-title">Contact</h2>
+      <p>I'm open to entry-level frontend roles and freelance projects. Send me a message.</p>
+      <ul class="contact-list">
+        <li><a href="mailto:salambayo3@gmail.com"><span>Email</span>salambayo3@gmail.com</a></li>
+        <li><a href="tel:+2348121716825"><span>Phone</span>08121716825</a></li>
+        <li><a href="https://wa.me/2347064520655?s=t" target="_blank" rel="noopener"><span>WhatsApp</span>Chat with me</a></li>
+        <li><a href="https://github.com/salambayo3" target="_blank" rel="noopener"><span>GitHub</span>github.com/salambayo3</a></li>
+        <li><a href="https://www.linkedin.com/in/tunde-salam-0211a5245" target="_blank" rel="noopener"><span>LinkedIn</span>linkedin.com/in/tunde-salam-0211a5245</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">&copy; 2026 Abdulsalam. All rights reserved.</div>
+</footer>
+
+<script>
+  const btn = document.querySelector('.menu-btn');
+  const menu = document.getElementById('menu');
+  function setMenu(open) {
+    menu.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  btn.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  const links = document.querySelectorAll('nav a');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  links.forEach(a => { const s = document.querySelector(a.getAttribute('href')); if (s) io.observe(s); });
+</script>
 </body>
-
 </html>
